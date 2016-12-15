@@ -13,4 +13,4 @@ class ResortplaceItem(scrapy.Item):
     # name = scrapy.Field()
     # pass
 
-    place_name         = Field()
+    place_name         = scrapy.Field()
