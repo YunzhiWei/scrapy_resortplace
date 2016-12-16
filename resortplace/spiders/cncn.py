@@ -15,6 +15,7 @@ class CncnCitySpider(scrapy.Spider):
     allowed_domains = _GLB_ALLOWED_DOMAIN
     start_urls = _GLB_START_URL_LIST
 
+    # Level 2
     def parse(self, response):
 
         print "\n\n######### city response: ", response
@@ -40,7 +41,7 @@ class CncnCitySpider(scrapy.Spider):
             print "Next @ ", nextpageurl
             yield scrapy.Request(nextpageurl, callback = self.parse)
 
-
+    # Level 3
     def parse_spot(self, response):
 
         print "\n\n######### spot response: ", response
@@ -72,7 +73,7 @@ class CncnCitySpider(scrapy.Spider):
 
         yield scrapy.Request(response.url + "profile", callback = self.parse_profile)
 
-
+    # Level 4
     def parse_profile(self, response):
 
         print "\n\n######### profile response: ", response
@@ -82,14 +83,27 @@ class CncnCitySpider(scrapy.Spider):
         for detail in content.xpath('.//p//text()').extract():  # .//p//text() 会提取 tag <p> 下面所有的 文本内容，可能是属于 tag <p> 的，也可能是嵌套在 <p> 内部的 <span> 等等
             print "detail: ", detail.replace(u'\xa0', ' ')
 
-        nextpageurl = response.url[0:response.url.find('profile')] + "menpiao"
-        # print "goto @ ", nextpageurl
-        yield scrapy.Request(nextpageurl, callback = self.parse_ticket)
+        # nextpageurl = response.url[0:response.url.find('profile')] + "menpiao"
+        # # print "goto @ ", nextpageurl
+        # yield scrapy.Request(nextpageurl, callback = self.parse_ticket)
         nextpageurl = response.url[0:response.url.find('profile')] + "jiaotong"
         # print "goto @ ", nextpageurl
         yield scrapy.Request(nextpageurl, callback = self.parse_traffic)
 
+    # Level 5
+    def parse_traffic(self, response):
 
+        print "\n\n######### traffic response: ", response
+
+        for ppp in response.xpath('//div[@class="box670"]/div[@class="txt1"]/p'):
+            details = ppp.xpath('.//text()').extract()
+            if len(details) > 0:
+                for detail in details:
+                    print "details: ", detail.replace(u'\xa0', ' ')
+
+        yield scrapy.Request(response.url[0:response.url.find('jiaotong')] + "menpiao", callback = self.parse_ticket)
+
+    # Level 6
     def parse_ticket(self, response):
 
         print "\n\n######### ticket response: ", response
@@ -105,14 +119,3 @@ class CncnCitySpider(scrapy.Spider):
             if len(details) > 0:
                 for detail in details:
                     print "itemvalue: ", detail.replace(u'\xa0', ' ')
-
-
-    def parse_traffic(self, response):
-
-        print "\n\n######### traffic response: ", response
-
-        for ppp in response.xpath('//div[@class="box670"]/div[@class="txt1"]/p'):
-            details = ppp.xpath('.//text()').extract()
-            if len(details) > 0:
-                for detail in details:
-                    print "details: ", detail.replace(u'\xa0', ' ')

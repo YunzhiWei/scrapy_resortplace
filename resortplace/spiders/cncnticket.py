@@ -4,7 +4,7 @@ import re
 import datetime
 from resortplace.items import ResortplaceItem
 
-# This is Level 5 Spider
+# This is Level 6 Spider
 _GLB_SPIDER_NAME     = "cncnticket"
 _GLB_ALLOWED_DOMAIN  = ["cncn.com"]
 _GLB_START_URL_LIST  = ["http://datong.cncn.com/jingdian/yungangshiku/menpiao"]
