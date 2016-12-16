@@ -75,16 +75,16 @@ ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
    # 'resortplace.pipelines.DumpPipeline': 300
    # ,
-   'resortplace.pipelines.JsonFilePipeline': 600
-   # 'resortplace.pipelines.MongoDBPipeline': 800,
+   # 'resortplace.pipelines.JsonFilePipeline': 600,
+   'resortplace.pipelines.MongoDBPipeline': 800
 }
 MONGODB_DB_INIT = "mongodb://"
-MONGODB_DB_SVR  = "ds023674.mlab.com"
-MONGODB_DB_PORT = "23674"
-MONGODB_DB_NAME = "diningcopy"
-MONGODB_DB_COLL = "deals"
-MONGODB_DB_USER = "diningcopy"
-MONGODB_DB_PSWD = "ChinaNetCloud"
+MONGODB_DB_SVR  = "ds133418.mlab.com"
+MONGODB_DB_PORT = "33418"
+MONGODB_DB_NAME = "resortplace"
+MONGODB_DB_COLL = "spots"
+MONGODB_DB_USER = "resortplace"
+MONGODB_DB_PSWD = "cncn"
 
 
 # Enable and configure the AutoThrottle extension (disabled by default)

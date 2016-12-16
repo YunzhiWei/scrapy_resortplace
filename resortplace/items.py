@@ -16,7 +16,7 @@ class ResortplaceItem(scrapy.Item):
     spot_name       = scrapy.Field()
     spot_addr       = scrapy.Field()
     spot_type       = scrapy.Field()
-    spot_them       = scrapy.Field()
+    spot_theme      = scrapy.Field()
     spot_star       = scrapy.Field()
     spot_info       = scrapy.Field()
     open_time       = scrapy.Field()
@@ -29,5 +29,6 @@ class CityLinkItem(scrapy.Item):
     # name = scrapy.Field()
     # pass
 
+    province        = scrapy.Field()
     city            = scrapy.Field()
     url             = scrapy.Field()

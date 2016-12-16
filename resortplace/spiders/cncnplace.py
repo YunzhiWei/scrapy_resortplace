@@ -32,6 +32,7 @@ class CncnPlaceSpider(scrapy.Spider):
             else:
                 name = namea.xpath('text()').extract()
             print "province name:  ", name[0]
+            item['province'] = name[0]
             for city in province.xpath('div[@class="li"]/a'):
                 link = city.xpath('@href').extract()
                 name = city.xpath('text()').extract()
