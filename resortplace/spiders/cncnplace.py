@@ -2,7 +2,7 @@
 import scrapy
 import re
 import datetime
-from resortplace.items import ResortplaceItem
+from resortplace.items import ResortplaceItem, CityLinkItem
 
 # This is Level 1 Spider
 _GLB_SPIDER_NAME     = "cncnplace"
@@ -19,6 +19,8 @@ class CncnPlaceSpider(scrapy.Spider):
 
         print "response: ", response
 
+        item = CityLinkItem()
+
         # iterate each search result to see if there is any new for today
         for province in response.xpath('//div[@class="city_all"]/div[@class="tli"]'):
             name0 = province.xpath('div[@class="t"]')
@@ -34,3 +36,6 @@ class CncnPlaceSpider(scrapy.Spider):
                 link = city.xpath('@href').extract()
                 name = city.xpath('text()').extract()
                 print "city: ", name[0], link[0]
+                item['city'] = name[0]
+                item['url']  = link[0]
+                yield item
