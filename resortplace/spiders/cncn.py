@@ -22,13 +22,11 @@ class CncnCitySpider(scrapy.Spider):
 
         # iterate each search result to see if there is any new for today
         for spot in response.xpath('//div[@class="city_spots"]/div[@class="city_spots_list"]/ul/li'):
-            print "spot: ", spot
+            # print "spot: ", spot
             link = spot.xpath('a/@href').extract()
             name = spot.xpath('a/div[@class="title"]/b/text()').extract()
-            if len(name) > 0:
-                print "name: ", name[0].replace(u'\xa0', ' ')
-            if len(link) > 0:
-                print "link: ", link[0]
+            if len(name) > 0 and len(link) > 0:
+                print "name: %s @ %s" % (name[0].replace(u'\xa0', ' '), link[0])
                 yield scrapy.Request(link[0], callback = self.parse_spot)
 
         # try to find if there is the next page link in the current search result
@@ -36,7 +34,7 @@ class CncnCitySpider(scrapy.Spider):
         pagelinks = response.xpath('//div[@class="page"]/div[@class="page_con"]/a[@class="num next"]/@href').extract()
         if len(pagelinks) > 0:
             rooturl = response.url[0:response.url.find('jingdian')]
-            print "url: ", rooturl
+            # print "url: ", rooturl
             nextpageurl = rooturl + "jingdian/" + pagelinks[0].encode('utf-8')
             print "Next @ ", nextpageurl
             yield scrapy.Request(nextpageurl, callback = self.parse)
@@ -46,30 +44,31 @@ class CncnCitySpider(scrapy.Spider):
 
         print "\n\n######### spot response: ", response
 
-        name = response.xpath('//div[@class="content mt20"]/div[@class="box_list"]/div[@class="spots_info_con"]/div[@class="spots_info"]/div[@class="type"]/h1/text()').extract()
-        star = response.xpath('//div[@class="content mt20"]/div[@class="box_list"]/div[@class="spots_info_con"]/div[@class="spots_info"]/div[@class="type"]/h1/em/text()').extract()
-        if len(name) > 0:
-            print "name: ", name[0].replace(u'\xa0', ' ')
-        if len(star) > 0:
-            print "star: ", star[0].replace(u'\xa0', ' ')
+        names = response.xpath('//div[@class="content mt20"]/div[@class="box_list"]/div[@class="spots_info_con"]/div[@class="spots_info"]/div[@class="type"]/h1/text()').extract()
+        stars = response.xpath('//div[@class="content mt20"]/div[@class="box_list"]/div[@class="spots_info_con"]/div[@class="spots_info"]/div[@class="type"]/h1/em/text()').extract()
+        if len(names) > 0 and len(stars) > 0:
+            print "%s %s" % (names[0].replace(u'\xa0', ' '), stars[0].replace(u'\xa0', ' '))
+        elif len(names) > 0:
+            print names[0].replace(u'\xa0', ' ')
         for detail in response.xpath('//div[@class="content mt20"]/div[@class="box_list"]/div[@class="spots_info_con"]/div[@class="spots_info"]/div[@class="type"]/dl'):
             # print "detail: ", detail
-            itemkey = detail.xpath('dt/text()').extract()
-            if len(itemkey) > 0:
-                print "itemkey: ", itemkey[0].replace(u'\xa0', ' ')
-                itemvalue = detail.xpath('dd/p[@class="more J_why"]')
-                if len(itemvalue) > 0:
-                    print "itemvalue: ", itemvalue.xpath('@detail').extract()[0].replace(u'\xa0', ' ')
+            itemkeys = detail.xpath('dt/text()').extract()
+            if len(itemkeys) > 0:
+                itemkey = itemkeys[0].replace(u'\xa0', ' ')
+                itemvalues = detail.xpath('dd/p[@class="more J_why"]')
+                if len(itemvalues) > 0:
+                    itemvalue = itemvalues.xpath('@detail').extract()[0].replace(u'\xa0', ' ')
                 else:
-                    itemvalue = detail.xpath('dd/p')
-                    if len(itemvalue) > 0:
-                        print "itemvalue: ", itemvalue.xpath('text()').extract()[0].replace(u'\xa0', ' ')
+                    itemvalues = detail.xpath('dd/p')
+                    if len(itemvalues) > 0:
+                        itemvalue = itemvalues.xpath('text()').extract()[0].replace(u'\xa0', ' ')
                     else:
-                        itemvalue = detail.xpath('dd/a')
-                        if len(itemvalue) > 0:
-                            print "itemvalue: ", itemvalue.xpath('text()').extract()[0].replace(u'\xa0', ' ')
+                        itemvalues = detail.xpath('dd/a')
+                        if len(itemvalues) > 0:
+                            itemvalue = itemvalues.xpath('text()').extract()[0].replace(u'\xa0', ' ')
                         else:
-                            print "itemvalue: ", detail.xpath('dd/text()').extract()[0].replace(u'\xa0', ' ')
+                            itemvalue = detail.xpath('dd/text()').extract()[0].replace(u'\xa0', ' ')
+                print "%s %s" % (itemkey, itemvalue)
 
         yield scrapy.Request(response.url + "profile", callback = self.parse_profile)
 
@@ -81,7 +80,7 @@ class CncnCitySpider(scrapy.Spider):
         content = response.xpath('//div[@class="type"]')
 
         for detail in content.xpath('.//p//text()').extract():  # .//p//text() 会提取 tag <p> 下面所有的 文本内容，可能是属于 tag <p> 的，也可能是嵌套在 <p> 内部的 <span> 等等
-            print "detail: ", detail.replace(u'\xa0', ' ')
+            print detail.replace(u'\xa0', ' ')
 
         # nextpageurl = response.url[0:response.url.find('profile')] + "menpiao"
         # # print "goto @ ", nextpageurl
@@ -99,7 +98,7 @@ class CncnCitySpider(scrapy.Spider):
             details = ppp.xpath('.//text()').extract()
             if len(details) > 0:
                 for detail in details:
-                    print "details: ", detail.replace(u'\xa0', ' ')
+                    print detail.replace(u'\xa0', ' ')
 
         yield scrapy.Request(response.url[0:response.url.find('jiaotong')] + "menpiao", callback = self.parse_ticket)
 
@@ -110,12 +109,15 @@ class CncnCitySpider(scrapy.Spider):
 
         for ppp in response.xpath('//div[@class="info_type"]/p'):
             # print "ppp: ", ppp
-            print "itemkey: ", ppp.xpath('span/text()').extract()[0].replace(u'\xa0', ' ')
+            itemkey = ppp.xpath('span/text()').extract()[0].replace(u'\xa0', ' ')
+            itemvalue = ""
             details = ppp.xpath('.//span[@class="nr"]/text()').extract()
             if len(details) > 0:
                 for detail in details:
-                    print "itemvalue: ", detail.replace(u'\xa0', ' ')
+                    itemvalue += detail.replace(u'\xa0', ' ')
             details = ppp.xpath('.//a//text()').extract()
             if len(details) > 0:
                 for detail in details:
-                    print "itemvalue: ", detail.replace(u'\xa0', ' ')
+                    itemvalue += detail.replace(u'\xa0', ' ')
+
+            print "%s %s" % (itemkey, itemvalue)
