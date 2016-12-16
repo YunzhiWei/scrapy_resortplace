@@ -171,6 +171,6 @@ class CncnCitySpider(scrapy.Spider):
         for kk in metadata.keys():
             if keyslookupdict.has_key(kk):
                 print kk, ":::", metadata[kk]
-                item[keyslookupdict[kk]] = metadata[kk].encode('utf-8','ignore')
+                item[keyslookupdict[kk]] = metadata[kk] #.encode('utf-8','ignore')
 
         yield item

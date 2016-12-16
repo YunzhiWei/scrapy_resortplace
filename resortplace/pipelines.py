@@ -81,10 +81,9 @@ class JsonFilePipeline(object):
         try:
             print "++++++++++++ Open output file ++++++++++++"
             print datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-            filename = _GBL_DEALS_FILE_NAME_FORMAT % (datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
+            filename = _GBL_DEALS_FILE_NAME_FORMAT % (spider.name + "_" + datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
             print filename
-            outputfile = open(filename, 'w') #, encoding='utf-8')
-            # outputfile = open(_GBL_DEALS_FILE_NAME_FORMAT % (datetime.datetime.now().strftime('%Y%m%d%H%M%S')), 'w', encoding='utf-8')
+            outputfile = codecs.open(filename, 'w', encoding='utf-8')
             self.outputfiles[spider] = outputfile
         except Exception as e:
             print "ERROR OPEN FILE!! >>> "
@@ -103,7 +102,7 @@ class JsonFilePipeline(object):
         try:
             print "Write file"
             line = json.dumps(dict(item)) + '\n'
-            self.outputfiles[spider].write(line)
+            self.outputfiles[spider].write(line.decode('unicode_escape'))
             return item 						# Without return item, other pipelines will not get the item to process
 
         except Exception as e:
