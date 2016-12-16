@@ -4,7 +4,7 @@ import re
 import datetime
 from resortplace.items import ResortplaceItem
 
-
+# This is Level 1 Spider
 _GLB_SPIDER_NAME     = "cncnplace"
 _GLB_ALLOWED_DOMAIN  = ["cncn.com"]
 # _GLB_START_POINT_URL = "http://www.neitui.me/index.php?name=neitui&handle=lists&fr=search&keyword="
