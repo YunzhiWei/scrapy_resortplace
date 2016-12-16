@@ -27,14 +27,14 @@ ROBOTSTXT_OBEY = True
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 1.5
+## DOWNLOAD_DELAY = 1.5
 # The download delay setting will honor only one of:
-CONCURRENT_REQUESTS_PER_DOMAIN = 6
+## CONCURRENT_REQUESTS_PER_DOMAIN = 6
 #CONCURRENT_REQUESTS_PER_IP = 16
 
-AUTOTHROTTLE_ENABLED = True
-AUTOTHROTTLE_START_DELAY = 2
-AUTOTHROTTLE_TARGET_CONCURRENCY = 6
+## AUTOTHROTTLE_ENABLED = True
+## AUTOTHROTTLE_START_DELAY = 2
+## AUTOTHROTTLE_TARGET_CONCURRENCY = 6
 
 # Disable cookies (enabled by default)
 #COOKIES_ENABLED = False
@@ -71,6 +71,21 @@ AUTOTHROTTLE_TARGET_CONCURRENCY = 6
 #ITEM_PIPELINES = {
 #    'resortplace.pipelines.SomePipeline': 300,
 #}
+
+ITEM_PIPELINES = {
+   # 'resortplace.pipelines.DumpPipeline': 300
+   # ,
+   'resortplace.pipelines.JsonFilePipeline': 600
+   # 'resortplace.pipelines.MongoDBPipeline': 800,
+}
+MONGODB_DB_INIT = "mongodb://"
+MONGODB_DB_SVR  = "ds023674.mlab.com"
+MONGODB_DB_PORT = "23674"
+MONGODB_DB_NAME = "diningcopy"
+MONGODB_DB_COLL = "deals"
+MONGODB_DB_USER = "diningcopy"
+MONGODB_DB_PSWD = "ChinaNetCloud"
+
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
