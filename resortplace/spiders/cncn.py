@@ -44,12 +44,16 @@ class CncnCitySpider(scrapy.Spider):
 
         print "\n\n######### spot response: ", response
 
+        metadata = {}
         names = response.xpath('//div[@class="content mt20"]/div[@class="box_list"]/div[@class="spots_info_con"]/div[@class="spots_info"]/div[@class="type"]/h1/text()').extract()
         stars = response.xpath('//div[@class="content mt20"]/div[@class="box_list"]/div[@class="spots_info_con"]/div[@class="spots_info"]/div[@class="type"]/h1/em/text()').extract()
         if len(names) > 0 and len(stars) > 0:
-            print "%s %s" % (names[0].replace(u'\xa0', ' '), stars[0].replace(u'\xa0', ' '))
+            metadata[u'景点名称'] = names[0].replace(u'\xa0', ' ')
+            metadata[u'景点星级'] = stars[0].replace(u'\xa0', ' ')
+            # print meta['name'], meta['star']
         elif len(names) > 0:
-            print names[0].replace(u'\xa0', ' ')
+            metadata[u'景点名称'] = names[0].replace(u'\xa0', ' ')
+            # print meta['name']
         for detail in response.xpath('//div[@class="content mt20"]/div[@class="box_list"]/div[@class="spots_info_con"]/div[@class="spots_info"]/div[@class="type"]/dl'):
             # print "detail: ", detail
             itemkeys = detail.xpath('dt/text()').extract()
@@ -68,44 +72,66 @@ class CncnCitySpider(scrapy.Spider):
                             itemvalue = itemvalues.xpath('text()').extract()[0].replace(u'\xa0', ' ')
                         else:
                             itemvalue = detail.xpath('dd/text()').extract()[0].replace(u'\xa0', ' ')
-                print "%s %s" % (itemkey, itemvalue)
+                # print "%s %s" % (itemkey, itemvalue)
+                itemkey = itemkey.replace(u'：', '')
+                itemkey = itemkey.replace(u':', '')
+                itemkey = itemkey.replace(u' ', '')
+                metadata[itemkey] = itemvalue
 
-        yield scrapy.Request(response.url + "profile", callback = self.parse_profile)
+        # for kk in metadata.keys():
+        #     print kk, metadata[kk]
+
+        yield scrapy.Request(response.url + "profile", meta = metadata, callback = self.parse_profile)
 
     # Level 4
     def parse_profile(self, response):
 
         print "\n\n######### profile response: ", response
+        metadata = response.meta
+        # for kk in metadata.keys():
+        #     print kk, metadata[kk]
 
         content = response.xpath('//div[@class="type"]')
+        profile = ""
 
         for detail in content.xpath('.//p//text()').extract():  # .//p//text() 会提取 tag <p> 下面所有的 文本内容，可能是属于 tag <p> 的，也可能是嵌套在 <p> 内部的 <span> 等等
-            print detail.replace(u'\xa0', ' ')
+            profile += detail.replace(u'\xa0', ' ')
+
+        metadata[u'详细介绍'] = profile
 
         # nextpageurl = response.url[0:response.url.find('profile')] + "menpiao"
         # # print "goto @ ", nextpageurl
         # yield scrapy.Request(nextpageurl, callback = self.parse_ticket)
         nextpageurl = response.url[0:response.url.find('profile')] + "jiaotong"
         # print "goto @ ", nextpageurl
-        yield scrapy.Request(nextpageurl, callback = self.parse_traffic)
+        yield scrapy.Request(nextpageurl, meta = metadata, callback = self.parse_traffic)
 
     # Level 5
     def parse_traffic(self, response):
 
         print "\n\n######### traffic response: ", response
+        metadata = response.meta
+        # for kk in metadata.keys():
+        #     print kk, metadata[kk]
 
+        traffic = ""
         for ppp in response.xpath('//div[@class="box670"]/div[@class="txt1"]/p'):
             details = ppp.xpath('.//text()').extract()
             if len(details) > 0:
                 for detail in details:
-                    print detail.replace(u'\xa0', ' ')
+                    traffic += detail.replace(u'\xa0', ' ')
 
-        yield scrapy.Request(response.url[0:response.url.find('jiaotong')] + "menpiao", callback = self.parse_ticket)
+        metadata[u'交通信息'] = traffic
+
+        yield scrapy.Request(response.url[0:response.url.find('jiaotong')] + "menpiao", meta = metadata, callback = self.parse_ticket)
 
     # Level 6
     def parse_ticket(self, response):
 
         print "\n\n######### ticket response: ", response
+        metadata = response.meta
+        # for kk in metadata.keys():
+        #     print kk, metadata[kk]
 
         for ppp in response.xpath('//div[@class="info_type"]/p'):
             # print "ppp: ", ppp
@@ -120,4 +146,26 @@ class CncnCitySpider(scrapy.Spider):
                 for detail in details:
                     itemvalue += detail.replace(u'\xa0', ' ')
 
-            print "%s %s" % (itemkey, itemvalue)
+            itemkey = itemkey.replace(u'：', '')
+            itemkey = itemkey.replace(u':', '')
+            itemkey = itemkey.replace(u' ', '')
+            metadata[itemkey] = itemvalue
+
+        print "########## Here is the final result: #############"
+
+        keyslookupdict = {
+            u'景点名称': 'name',
+            u'景点地址': 'address',
+            u'景点类型': 'type',
+            u'景点主题': 'theme',
+            u'景点星级': 'star',
+            u'详细介绍': 'info',
+            u'开放时间': 'time',
+            u'交通信息': 'traffic',
+            u'门票分类': 'ticket type',
+            u'门票信息': 'ticket info'
+        }
+
+        for kk in metadata.keys():
+            if keyslookupdict.has_key(kk):
+                print kk, ":::", metadata[kk]
