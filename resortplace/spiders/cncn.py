@@ -7,11 +7,18 @@ from resortplace.items import ResortplaceItem
 # This is Level 4 Spider
 _GLB_SPIDER_NAME     = "cncn"
 _GLB_ALLOWED_DOMAIN  = ["cncn.com"]
-_GLB_START_URL_LIST  = [
-    # "http://hengshui.cncn.com/jingdian/",
-    # "http://tongliao.cncn.com/jingdian/",
-    "http://changchun.cncn.com/jingdian/"
+_GLB_CITY_URL_LIST   = [
+    "http://hongkong.cncn.com",
+    "http://macao.cncn.com",
+    "http://taiwan.cncn.com"
 ]
+_GLB_START_URL_LIST  = [_url + "/jingdian/" for _url in _GLB_CITY_URL_LIST]
+# _GLB_START_URL_LIST  = [
+#     # "http://hengshui.cncn.com/jingdian/",
+#     # "http://tongliao.cncn.com/jingdian/",
+#     "http://changchun.cncn.com/jingdian/"
+# ]
+
 
 class CncnCitySpider(scrapy.Spider):
 
@@ -177,7 +184,7 @@ class CncnCitySpider(scrapy.Spider):
 
         for kk in metadata.keys():
             if keyslookupdict.has_key(kk):
-                print kk, ":::", metadata[kk]
+                # print kk, ":::", metadata[kk]
                 item[keyslookupdict[kk]] = metadata[kk] #.encode('utf-8','ignore')
 
         yield item

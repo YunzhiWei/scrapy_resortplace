@@ -73,9 +73,8 @@ ROBOTSTXT_OBEY = True
 #}
 
 ITEM_PIPELINES = {
-   # 'resortplace.pipelines.DumpPipeline': 300
-   # ,
-   # 'resortplace.pipelines.JsonFilePipeline': 600,
+   # 'resortplace.pipelines.DumpPipeline': 300,
+   'resortplace.pipelines.JsonFilePipeline': 600,
    'resortplace.pipelines.MongoDBPipeline': 800
 }
 MONGODB_DB_INIT = "mongodb://"
