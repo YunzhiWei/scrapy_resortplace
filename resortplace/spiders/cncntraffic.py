@@ -7,19 +7,13 @@ from resortplace.items import ResortplaceItem
 # This is Level 5 Spider
 _GLB_SPIDER_NAME     = "cncntraffic"
 _GLB_ALLOWED_DOMAIN  = ["cncn.com"]
-# _GLB_START_POINT_URL = "http://www.neitui.me/index.php?name=neitui&handle=lists&fr=search&keyword="
-# _GLB_SEARCH_KEYWORDS = ["Python", "hadoop", "大数据", "技术总监"]
-# _GLB_START_URL_LIST  = [_GLB_START_POINT_URL + _keyword for _keyword in _GLB_SEARCH_KEYWORDS]
-
+_GLB_START_URL_LIST  = ["http://datong.cncn.com/jingdian/yungangshiku/jiaotong"]
 
 class CncnTrafficSpider(scrapy.Spider):
 
     name = _GLB_SPIDER_NAME
     allowed_domains = _GLB_ALLOWED_DOMAIN
-
-    start_urls = ["http://datong.cncn.com/jingdian/yungangshiku/jiaotong"] # _GLB_START_URL_LIST
-
-    # todayflag  = datetime.datetime.now().strftime('%m-%d')
+    start_urls = _GLB_START_URL_LIST
 
     def parse(self, response):
         """
