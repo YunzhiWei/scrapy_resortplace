@@ -7,7 +7,11 @@ from resortplace.items import ResortplaceItem
 # This is Level 4 Spider
 _GLB_SPIDER_NAME     = "cncn"
 _GLB_ALLOWED_DOMAIN  = ["cncn.com"]
-_GLB_START_URL_LIST  = ["http://hengshui.cncn.com/jingdian/"]
+_GLB_START_URL_LIST  = [
+    # "http://hengshui.cncn.com/jingdian/",
+    # "http://tongliao.cncn.com/jingdian/",
+    "http://changchun.cncn.com/jingdian/"
+]
 
 class CncnCitySpider(scrapy.Spider):
 
@@ -18,7 +22,9 @@ class CncnCitySpider(scrapy.Spider):
     # Level 2
     def parse(self, response):
 
-        print "\n\n######### city response: ", response
+        print "\n\n######### city response: ", response, response.url
+        metadata = {}
+        metadata['root_url'] = response.url
 
         # iterate each search result to see if there is any new for today
         for spot in response.xpath('//div[@class="city_spots"]/div[@class="city_spots_list"]/ul/li'):
@@ -26,8 +32,8 @@ class CncnCitySpider(scrapy.Spider):
             link = spot.xpath('a/@href').extract()
             name = spot.xpath('a/div[@class="title"]/b/text()').extract()
             if len(name) > 0 and len(link) > 0:
-                print "name: %s @ %s" % (name[0].replace(u'\xa0', ' '), link[0])
-                yield scrapy.Request(link[0], callback = self.parse_spot)
+                # print "name: %s @ %s" % (name[0].replace(u'\xa0', ' '), link[0])
+                yield scrapy.Request(link[0], meta = metadata, callback = self.parse_spot)
 
         # try to find if there is the next page link in the current search result
         # if yes, try to get the link and invoke this parse to process
@@ -36,7 +42,7 @@ class CncnCitySpider(scrapy.Spider):
             rooturl = response.url[0:response.url.find('jingdian')]
             # print "url: ", rooturl
             nextpageurl = rooturl + "jingdian/" + pagelinks[0].encode('utf-8')
-            print "Next @ ", nextpageurl
+            # print "Next @ ", nextpageurl
             yield scrapy.Request(nextpageurl, callback = self.parse)
 
     # Level 3
@@ -44,7 +50,7 @@ class CncnCitySpider(scrapy.Spider):
 
         print "\n\n######### spot response: ", response
 
-        metadata = {}
+        metadata = response.meta
         names = response.xpath('//div[@class="content mt20"]/div[@class="box_list"]/div[@class="spots_info_con"]/div[@class="spots_info"]/div[@class="type"]/h1/text()').extract()
         stars = response.xpath('//div[@class="content mt20"]/div[@class="box_list"]/div[@class="spots_info_con"]/div[@class="spots_info"]/div[@class="type"]/h1/em/text()').extract()
         if len(names) > 0 and len(stars) > 0:
@@ -154,6 +160,7 @@ class CncnCitySpider(scrapy.Spider):
         print "########## Here is the final result: #############"
 
         keyslookupdict = {
+            'root_url': 'root_url',
             u'景点名称': 'spot_name',
             u'景点地址': 'spot_addr',
             u'景点类型': 'spot_type',

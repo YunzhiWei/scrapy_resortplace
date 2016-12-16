@@ -13,6 +13,7 @@ class ResortplaceItem(scrapy.Item):
     # name = scrapy.Field()
     # pass
 
+    root_url        = scrapy.Field()
     spot_name       = scrapy.Field()
     spot_addr       = scrapy.Field()
     spot_type       = scrapy.Field()
