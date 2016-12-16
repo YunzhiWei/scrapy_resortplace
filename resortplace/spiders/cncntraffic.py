@@ -16,14 +16,6 @@ class CncnTrafficSpider(scrapy.Spider):
     start_urls = _GLB_START_URL_LIST
 
     def parse(self, response):
-        """
-        Function:   This function is to parse the search result list
-
-        IN:         response - crawl response
-        Out:        NA
-
-        Special:
-        """
 
         print "response: ", response
 
