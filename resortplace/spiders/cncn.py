@@ -154,18 +154,23 @@ class CncnCitySpider(scrapy.Spider):
         print "########## Here is the final result: #############"
 
         keyslookupdict = {
-            u'景点名称': 'name',
-            u'景点地址': 'address',
-            u'景点类型': 'type',
-            u'景点主题': 'theme',
-            u'景点星级': 'star',
-            u'详细介绍': 'info',
-            u'开放时间': 'time',
-            u'交通信息': 'traffic',
-            u'门票分类': 'ticket type',
-            u'门票信息': 'ticket info'
+            u'景点名称': 'spot_name',
+            u'景点地址': 'spot_addr',
+            u'景点类型': 'spot_type',
+            u'景点主题': 'spot_theme',
+            u'景点星级': 'spot_star',
+            u'详细介绍': 'spot_info',
+            u'开放时间': 'open_time',
+            u'门票分类': 'ticket_type',
+            u'门票信息': 'ticket_info',
+            u'交通信息': 'traffic_info'
         }
+
+        item = ResortplaceItem()
 
         for kk in metadata.keys():
             if keyslookupdict.has_key(kk):
                 print kk, ":::", metadata[kk]
+                item[keyslookupdict[kk]] = metadata[kk].encode('utf-8','ignore')
+
+        yield item
