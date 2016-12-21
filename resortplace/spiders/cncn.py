@@ -16,8 +16,7 @@ _GLB_CITY_URL_LIST   = [
     # "http://hongkong.cncn.com",
     # "http://macao.cncn.com",
     # "http://taiwan.cncn.com"
-
-    # 2016-12-17 6:00 - 8:00
+    ###################################### 2016-12-17 6:00 - 8:00
     # "http://shijiazhuang.cncn.com",
     # "http://tangshan.cncn.com",
     # "http://qinhuangdao.cncn.com",
@@ -29,8 +28,7 @@ _GLB_CITY_URL_LIST   = [
     # "http://cangzhou.cncn.com",
     # "http://langfang.cncn.com",
     # "http://hengshui.cncn.com"
-
-    # 2016-12-17 8:12 - 10:55
+    ####################################### 2016-12-17 8:12 - 10:55
     # "http://taiyuan.cncn.com",
     # "http://datong.cncn.com",
     # "http://yangquan.cncn.com",
@@ -55,8 +53,7 @@ _GLB_CITY_URL_LIST   = [
     # "http://hinggan.cncn.com",
     # "http://xilingol.cncn.com",
     # "http://alashan.cncn.com"
-
-    # 2016-12-17 13:20 - 16:30
+    ################################## 2016-12-17 13:20 - 16:30
     # "http://shenyang.cncn.com",
     # "http://dalian.cncn.com",
     # "http://anshan.cncn.com",
@@ -95,8 +92,7 @@ _GLB_CITY_URL_LIST   = [
     # "http://heihe.cncn.com",
     # "http://suihua.cncn.com",
     # "http://daxinganling.cncn.com"
-
-    # 2016-12-17 16:45 - 2:30
+    ######################################### 2016-12-17 16:45 - 2:30
     # "http://nanjing.cncn.com",
     # "http://wuxi.cncn.com",
     # "http://xuzhou.cncn.com",
@@ -140,8 +136,7 @@ _GLB_CITY_URL_LIST   = [
     # "http://bozhou.cncn.com",
     # "http://chizhou.cncn.com",
     # "http://xuancheng.cncn.com"
-
-    # 2016-12-18 6:10 - 12:56
+    ################################ 2016-12-18 6:10 - 12:56
     # "http://fuzhou.cncn.com",
     # "http://xiamen.cncn.com",
     # "http://putian.cncn.com",
@@ -181,8 +176,7 @@ _GLB_CITY_URL_LIST   = [
     # "http://liaocheng.cncn.com",
     # "http://binzhou.cncn.com",
     # "http://heze.cncn.com"
-
-    # 2016-12-18 14:45 - 2:18
+    ##################################### 2016-12-18 14:45 - 2:18
     # "http://zhengzhou.cncn.com",
     # "http://kaifeng.cncn.com",
     # "http://luoyang.cncn.com",
@@ -270,6 +264,119 @@ _GLB_CITY_URL_LIST   = [
     # "http://haikou.cncn.com",
     # "http://sanya.cncn.com",
     # "http://sansha.cncn.com"
+    ################################## 2016-12-19 10:02 - 17:02
+    # "http://chengdu.cncn.com",
+    # "http://zigong.cncn.com",
+    # "http://panzhihua.cncn.com",
+    # "http://luzhou.cncn.com",
+    # "http://deyang.cncn.com",
+    # "http://mianyang.cncn.com",
+    # "http://guangyuan.cncn.com",
+    # "http://suining.cncn.com",
+    # "http://neijiang.cncn.com",
+    # "http://leshan.cncn.com",
+    # "http://nanchong.cncn.com",
+    # "http://meishan.cncn.com",
+    # "http://yibin.cncn.com",
+    # "http://guangan.cncn.com",
+    # "http://dazhou.cncn.com",
+    # "http://yaan.cncn.com",
+    # "http://bazhong.cncn.com",
+    # "http://ziyang.cncn.com",
+    # "http://aba.cncn.com",
+    # "http://ganzi.cncn.com",
+    # "http://liangshan.cncn.com",
+    #
+    # "http://guiyang.cncn.com",
+    # "http://liupanshui.cncn.com",
+    # "http://zunyi.cncn.com",
+    # "http://anshun.cncn.com",
+    # "http://tongren.cncn.com",
+    # "http://qianxinan.cncn.com",
+    # "http://bijie.cncn.com",
+    # "http://qiandongnan.cncn.com",
+    # "http://qiannan.cncn.com"
+    ################################# 2016-12-19 20:30 - 23:01
+    # "http://kunming.cncn.com",
+    # "http://qujing.cncn.com",
+    # "http://yuxi.cncn.com",
+    # "http://baoshan.cncn.com",
+    # "http://zhaotong.cncn.com",
+    # "http://lijiang.cncn.com",
+    # "http://puer.cncn.com",
+    # "http://lincang.cncn.com",
+    # "http://chuxiong.cncn.com",
+    # "http://honghe.cncn.com",
+    # "http://wenshan.cncn.com",
+    # "http://xishuangbanna.cncn.com",
+    # "http://dali.cncn.com",
+    # "http://dehong.cncn.com",
+    # "http://nujiang.cncn.com",
+    # "http://diqing.cncn.com",
+    #
+    # "http://lhasa.cncn.com",
+    # "http://changdu.cncn.com",
+    # "http://shannan.cncn.com",
+    # "http://xigaze.cncn.com",
+    # "http://nagqu.cncn.com",
+    # "http://ngari.cncn.com",
+    # "http://nyingchi.cncn.com"
+    ################################## 2016-12-20 8:43 - 18:48
+    # "http://xian.cncn.com",
+    # "http://tongchuan.cncn.com",
+    # "http://baoji.cncn.com",
+    # "http://xianyang.cncn.com",
+    # "http://weinan.cncn.com",
+    # "http://yanan.cncn.com",
+    # "http://hanzhong.cncn.com",
+    # "http://sxyulin.cncn.com",
+    # "http://ankang.cncn.com",
+    # "http://shangluo.cncn.com",
+    #
+    # "http://lanzhou.cncn.com",
+    # "http://jiayuguan.cncn.com",
+    # "http://jinchang.cncn.com",
+    # "http://baiyin.cncn.com",
+    # "http://tianshui.cncn.com",
+    # "http://wuwei.cncn.com",
+    # "http://zhangye.cncn.com",
+    # "http://pingliang.cncn.com",
+    # "http://jiuquan.cncn.com",
+    # "http://qingyang.cncn.com",
+    # "http://dingxi.cncn.com",
+    # "http://longnan.cncn.com",
+    # "http://linxia.cncn.com",
+    # "http://gannan.cncn.com",
+    #
+    # "http://xining.cncn.com",
+    # "http://haidong.cncn.com",
+    # "http://haibei.cncn.com",
+    # "http://huangnan.cncn.com",
+    # "http://hainanzhou.cncn.com",
+    # "http://golog.cncn.com",
+    # "http://yushu.cncn.com",
+    # "http://haixi.cncn.com",
+    #
+    # "http://yinchuan.cncn.com",
+    # "http://shizuishan.cncn.com",
+    # "http://wuzhong.cncn.com",
+    # "http://guyuan.cncn.com",
+    # "http://zhongwei.cncn.com",
+    #
+    # "http://urumqi.cncn.com",
+    # "http://karamay.cncn.com",
+    # "http://tulufan.cncn.com",
+    # "http://hami.cncn.com",
+    # "http://changji.cncn.com",
+    # "http://bortala.cncn.com",
+    # "http://bayingolin.cncn.com",
+    # "http://akesu.cncn.com",
+    # "http://kizilsukirgiz.cncn.com",
+    # "http://kashi.cncn.com",
+    # "http://hetian.cncn.com",
+    # "http://yili.cncn.com",
+    # "http://tacheng.cncn.com",
+    # "http://altay.cncn.com"
 ]
 
 _GLB_START_URL_LIST  = [_url + "/jingdian/" for _url in _GLB_CITY_URL_LIST]
